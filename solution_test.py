@@ -75,7 +75,9 @@ class TestNakedTwins(unittest.TestCase):
         self.assertTrue(solution.naked_twins(self.before_naked_twins_2) in self.possible_solutions_2,
                         "Your naked_twins function produced an unexpected board.")
 
-
+    def test_naked_twins_for_row(self):
+        res = solution.naked_twins_for_unit(self.before_naked_twins_2, solution.unitlist[2])
+        self.assertEqual(res['C5'], '79')
 
 class TestDiagonalSudoku(unittest.TestCase):
     diagonal_grid = '2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3'

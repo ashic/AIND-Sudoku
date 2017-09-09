@@ -27,6 +27,8 @@ boxes = cross(rows, cols)
 row_units = [cross(r, cols) for r in rows]
 column_units = [cross(rows, c) for c in cols]
 square_units = [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','456','789')]
+
+# add the two diagonals as units
 diagonal_units = [
     ["{}{}".format(rows[i], cols[i]) for i in range(9)],
     ["{}{}".format(rows[i], cols[8-i]) for i in range(9)]
@@ -38,12 +40,23 @@ peers = dict((s, set(sum(units[s],[]))-set([s])) for s in boxes)
 
 
 def remove_match(val, m):
+    '''
+    Helper to remove digits from a string of digits
+    :param val: the string of digits to remove from
+    :param m: the string of digits to remove
+    :return: val, with digits from m stripped.
+    '''
     return ''.join([c for c in val if c not in m])
 
 
 def naked_twins_for_unit(values, unit):
-    values_list = [(values[b], b) for b in unit]
-    counts = Counter([r[0] for r in values_list])
+    '''
+    Applies naked twins (for any length) from a unit
+    :param values: current representation of the puzzle
+    :param unit: List of boxes comprising a unit
+    :return: representation of the puzzle with naked twins applied for unit.
+    '''
+    counts = Counter([values[b] for b in unit])
     matches = [c for c in counts if counts[c] == len(c) and counts[c] > 1]
 
     changed = False
@@ -58,6 +71,7 @@ def naked_twins_for_unit(values, unit):
     if not changed:
         return values
 
+    # call recursively, in case changes mean naked twins can be applied to the unit again.
     return naked_twins_for_unit(values, unit)
 
 def naked_twins(values):

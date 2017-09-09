@@ -5,6 +5,8 @@
 Q: How do we use constraint propagation to solve the naked twins problem?  
 A: I'm going through each unit, checking for matches where the length of the current value for a box is equal to the number of occurences of that value within the unit, and that length is greater than one. For the matches, I remove those digits from all the other boxes in the same unit. This propagates the constrained to the rest of the boxes in the unit. 
 
+Note, this implementation is not limited to two squares in a unit with identical values of length two; it can deal with three boxes with equal values of length three, four boxes of length four, etc.
+
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?  
 A: I add the two diagonals to the list of units. This ensures that the constraint of having each diagonal having each digit exactly once is maintained, as our existing rules ensure that each unit has each digit exactly once.
